@@ -1,0 +1,12 @@
+{
+  "name": "pat-casey-markov",
+  "version": "1.0.0",
+  "description": "Random Pat Casey quote generator",
+  "main": "src/index.js",
+  "author": "thunklife",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "lodash": "4.17.19"
+  }
+}
