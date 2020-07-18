@@ -4,8 +4,10 @@
   "description": "A simple library to generate random text using a Markov chain.",
   "main": "src/index.js",
   "author": "thunklife",
-  "license": "MIT",
-  "private": true,
+  "url": "http:thunklife.dev",
+  "repository": "https://github.com/thunklife/markov-text-generator",
+  "license": "ISC",
+  "private": false,
   "dependencies": {
     "lodash": "4.17.19"
   }
