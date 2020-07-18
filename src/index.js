@@ -32,18 +32,18 @@ const build = (n = 2, text) => {
   chain = reduce(textlines, buildEntry, {ngramSize: n, beginnings:[], dict: {}});
 };
 
-const run = (chain) => (max = 50) => {
+const run = (max = 50) => {
   let start = randChoice(chain.beginnings)
   const output = tokenize(start);
   for(let i = 0; i < max; i++) {
-		if(chain.dict[start]) {
-			const nextOptions = chain.dict[start];
-			const next = randChoice(nextOptions);
-			output.push(next);
-			start = output.slice(output.length - chain.ngramSize, output.length).join(' ');
-		} else {
-			break;
-		}
+    if(chain.dict[start]) {
+      const nextOptions = chain.dict[start];
+      const next = randChoice(nextOptions);
+      output.push(next);
+      start = output.slice(output.length - chain.ngramSize, output.length).join(' ');
+    } else {
+      break;
+    };
   };
   
   return output.join(' ');
@@ -51,5 +51,5 @@ const run = (chain) => (max = 50) => {
 
 module.exports = {
   build,
-  run: run(chain)
+  run
 };
