@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "author": "thunklife",
   "url": "http:thunklife.dev",
-  "repository": "https://github.com/thunklife/markov-text-generator",
+  "repository": "https://github.com/thunklife/markov-text-gen",
   "license": "ISC",
   "private": false,
   "dependencies": {
