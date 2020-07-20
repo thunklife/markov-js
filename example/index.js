@@ -1,7 +1,11 @@
 
 const build = require('../src/index');
-const text = require('./text');
+const shortText = require('./short-text');
+const longText = require('./long-text');
 
-const run = build(2, text);
-const phrase = run(50);
-console.log(phrase);
+const runByWords = build(shortText, 3, false);
+const runByChars = build(longText, 6, true);
+const wordPhrase = runByWords(100);
+const charPhrase = runByChars(2000);
+console.log(`WORDS: ${wordPhrase} \n`);
+console.log(`CHARS: ${charPhrase}`);

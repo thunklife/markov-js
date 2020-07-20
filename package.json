@@ -1,6 +1,6 @@
 {
   "name": "markov-text-gen",
-  "version": "2.0.1",
+  "version": "3.0.0",
   "description": "A simple library to generate random text using a Markov chain.",
   "main": "src/index.js",
   "author": "thunklife",
