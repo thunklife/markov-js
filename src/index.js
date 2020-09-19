@@ -9,46 +9,10 @@ const randChoice = (arr) => {
 
 const lines = (str) => str.split('\n');
 
-const runWords = (chain) => (max = 50) => {
-  let start = randChoice(chain.beginnings)
-  const output = tokenize(start);
-  for(let i = 0; i < max; i++) {
-    if(chain.dict[start]) {
-      const nextOptions = chain.dict[start];
-      const next = randChoice(nextOptions);
-      output.push(next);
-      start = output.slice(output.length - chain.ngramSize, output.length).join(' ');
-    } else {
-      break;
-    };
-  };
-  
-  return output.join(' ');
-};
-
-const runChars = (chain) => (max = 1000) => {
-  let start = randChoice(chain.beginnings)
-  let output = start;
-  for(let i = 0; i < max; i++) {
-    if(chain.dict[start]) {
-      const nextOptions = chain.dict[start];
-      const next = randChoice(nextOptions);
-      output = output.concat(next);
-      start = output.substring(output.length - chain.ngramSize, output.length);
-    } else {
-      break;
-    };
-  };
-  
-  return output;
-};
-
-
 const buildEntryByChars = (acc, line) => {
- if(line.length <= 0) return acc;
+  if(line.length <= 0) { return acc; }
   const beginning = line.substring(0, acc.ngramSize);
   acc.beginnings.push(beginning);
-
   for (let i = 0; i < line.length - acc.ngramSize; i++) {
     const gram = line.substring(i, i + acc.ngramSize);
     const next = line.charAt(i + acc.ngramSize);
@@ -74,18 +38,59 @@ const buildEntryByWords = (acc, line) => {
   return acc;
 };
 
-const build = (text, n, byChar) => {
-  if(byChar) {
-    if(text.length < n) return {ngramSize:n, beginnings: [], dict: {}};
-    const textArr = text.split('\n');
-    const res = reduce(textArr, buildEntryByChars, {ngramSize: n, beginnings:[], dict: {}});
-    return runChars(res);
-  } else {
-    const textLines = lines(text);
-    const res = reduce(textLines, buildEntryByWords, {ngramSize: n, beginnings:[], dict: {}});
-    return runWords(res);
-  }
+const runWords = (chain) => (max = 50) => {
+  let start = randChoice(chain.beginnings)
+  const output = tokenize(start);
+
+  for(let i = 0; i < max; i++) {
+    if(chain.dict[start]) {
+      const nextOptions = chain.dict[start];
+      const next = randChoice(nextOptions);
+      output.push(next);
+      start = output.slice(output.length - chain.ngramSize, output.length).join(' ');
+    } else {
+      break;
+    };
+  };
+  
+  return output.join(' ');
 };
 
+const runChars = (chain) => (max = 1000) => {
+  let start = randChoice(chain.beginnings)
+  let output = start;
+
+  for(let i = 0; i < max; i++) {
+    if(chain.dict[start]) {
+      const nextOptions = chain.dict[start];
+      const next = randChoice(nextOptions);
+      output = output.concat(next);
+      start = output.substring(output.length - chain.ngramSize, output.length);
+    } else {
+      break;
+    };
+  };
+  
+  return output;
+};
+
+const build = (text, n, byChar) => {
+  return new Promise((resolve, reject) => {
+    try {
+      if(byChar) {
+        if(text.length < n) reject(new Error('Text is not long enough'));
+        const textArr = text.split('\n');
+        const res = reduce(textArr, buildEntryByChars, {ngramSize: n, beginnings:[], dict: {}});
+        resolve(runChars(res));
+      } else {
+        const textLines = lines(text);
+        const res = reduce(textLines, buildEntryByWords, {ngramSize: n, beginnings:[], dict: {}});
+        resolve(runWords(res))
+      }
+    } catch (e) {
+      reject(e);
+    }
+  });
+};
 
 module.exports = build;
