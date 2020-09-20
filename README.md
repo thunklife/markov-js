@@ -19,7 +19,7 @@ The return value is a randomly generated `string`.
 import text from './text';
 import build from 'markov-text-gen';
 
-const run = build(text, 3, false) // The text to be ingested, the nGram size, and whether to build byChars
+build(text, 3, false) // The text to be ingested, the nGram size, and whether to build byChars
   .then((run) => {
     const result = run(35);
     console.log(result);
