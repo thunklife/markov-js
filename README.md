@@ -19,10 +19,11 @@ The return value is a randomly generated `string`.
 import text from './text';
 import build from 'markov-text-gen';
 
-const run = build(text, 3, false); // The text to be ingested, the nGram size, and whether to build byChars
-const result = run(35);
-
-console.log(result);
+const run = build(text, 3, false) // The text to be ingested, the nGram size, and whether to build byChars
+  .then((run) => {
+    const result = run(35);
+    console.log(result);
+  });
 ```
 
 ## Inspiration
@@ -32,3 +33,8 @@ The Coding Train [YouTube](https://www.youtube.com/watch?v=eGFJ8vugIWA)
 The Coding Train [GitHub](https://github.com/shiffman/A2Z-F16/tree/gh-pages/week7-markov/03_markov_byword)
 
 [Markov Chains Explained Visually](https://setosa.io/ev/markov-chains/)
+
+## TODO
+
+In no particular order: tests, linting, general clean-up of code.
+
