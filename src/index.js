@@ -7,6 +7,11 @@ const randChoice = (arr) => {
   return arr[idx];
 };
 
+const fullSentences = (text) => {
+  const t = text.split(/\(?=[^\.]+$)/)[0];
+  return t.endsWith('.') ? t : t.concat('.');
+};
+
 const lines = (str) => str.split('\n');
 
 const buildEntryByChars = (acc, line) => {
@@ -53,7 +58,7 @@ const runWords = (chain) => (max = 50) => {
     };
   };
   
-  return output.join(' ');
+  return fullSentences(output.join(' '));
 };
 
 const runChars = (chain) => (max = 1000) => {
@@ -71,7 +76,7 @@ const runChars = (chain) => (max = 1000) => {
     };
   };
   
-  return output;
+  return fullSentences(output);
 };
 
 const build = (text, n, byChar) => {
