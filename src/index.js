@@ -8,7 +8,7 @@ const randChoice = (arr) => {
 };
 
 const fullSentences = (text) => {
-  const t = text.split(/\(?=[^\.]+$)/)[0];
+  const t = text.split(/\.(?=[^\.]+$)/)[0];
   return t.endsWith('.') ? t : t.concat('.');
 };
 
